@@ -55,10 +55,11 @@ RUN npm install -g rtlcss
 
 # Install Flectra
 ENV FLECTRA_VERSION 2.0alpha
-ARG FLECTRA_RELEASE=20210101
-ARG FLECTRA_SHA=3ab03e777811439a8d0af90a0ac7f70cb8888ebe
+ARG FLECTRA_RELEASE=latest
+
 RUN curl -o flectra.deb -sSL https://download.flectrahq.com/2.0/pub/deb/flectra_${FLECTRA_VERSION}.${FLECTRA_RELEASE}_all.deb \
-    && echo "${FLECTRA_SHA} flectra.deb" | sha1sum -c - \
+    && curl -o flectra_${FLECTRA_VERSION}.${FLECTRA_RELEASE}_amd64.changes -sSL https://download.flectrahq.com/2.0/pub/deb/flectra_${FLECTRA_VERSION}.${FLECTRA_RELEASE}_amd64.changes \
+    && echo "`sed -n '/^Checksums-Sha1:$/{n;p;n;p;n;p}' flectra_${FLECTRA_VERSION}.${FLECTRA_RELEASE}_amd64.changes | tail -1 | awk '{print $1}'` flectra.deb" | sha1sum -c \
     && apt-get update \
     && apt-get -y install --no-install-recommends ./flectra.deb \
     && rm -rf /var/lib/apt/lists/* flectra.deb
