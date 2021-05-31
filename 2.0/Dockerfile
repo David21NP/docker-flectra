@@ -54,7 +54,7 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' > /etc/
 RUN npm install -g rtlcss
 
 # Install Flectra
-ENV FLECTRA_VERSION 2.0alpha
+ENV FLECTRA_VERSION 2.0
 ARG FLECTRA_RELEASE=latest
 
 RUN curl -o flectra.deb -sSL https://download.flectrahq.com/2.0/pub/deb/flectra_${FLECTRA_VERSION}.${FLECTRA_RELEASE}_all.deb \
