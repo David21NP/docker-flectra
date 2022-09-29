@@ -1,7 +1,7 @@
 #Partially from Odoo's dockerfile
 #github.com/odoo/docker
 
-FROM debian:stretch
+FROM debian:buster
 MAINTAINER FlectraHQ <flectra@flectrahq.com>
 
 # Generate locale C.UTF-8 for postgres and general locale data
@@ -10,6 +10,7 @@ ENV FLECTRA_VERSION=1.7
 ENV FLECTRA_RELEASE=latest
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
+
 RUN set -x; \
         apt-get update \
         && apt-get install -y --no-install-recommends \
@@ -17,9 +18,15 @@ RUN set -x; \
             curl \
             node-less \
             python3-pip \
+            python3-dev \
+            python3-wheel \
+            python3-vobject \
             python3-setuptools \
+            python3-phonenumbers \
+            python3-pyldap \
+            python3-qrcode \
             python3-renderpm \
-            libssl1.0-dev \
+  #          libssl1.0-dev \
             xz-utils \
             python3-watchdog \
         && curl -o wkhtmltox.tar.xz -SL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
@@ -40,7 +47,7 @@ RUN set -x; \
         && rm -rf /var/lib/apt/lists/* flectra_${FLECTRA_VERSION}.${FLECTRA_RELEASE}_all.deb
 
 # Copy entrypoint script and Odoo configuration file
-RUN pip3 install num2words xlwt
+RUN pip3 install num2words xlwt pyldap
 COPY ./entrypoint.sh /
 COPY ./flectra.conf /etc/flectra/
 RUN chown flectra /etc/flectra/flectra.conf
