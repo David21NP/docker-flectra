@@ -86,7 +86,7 @@ RUN npm install -g rtlcss
 # Install Flectra
 RUN adduser --disabled-password --home /opt/flectra --gecos '' flectra
 RUN mkdir /etc/flectra && mkdir /tmp/flectra/
-RUN git clone --depth=1 --branch=3.0 https://gitlab.com/flectra-hq/flectra.git /opt/flectra/server
+RUN git clone --depth=1 --branch=3.0-custom-dev https://github.com/David21NP/flectra.git /opt/flectra/server
 RUN pip3 install --upgrade pip
 RUN cd /opt/flectra/server && pip3 install -r requirements.txt
 
